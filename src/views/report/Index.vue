@@ -1,66 +1,78 @@
 <template>
+  <div>
     <div class="amap-page-container">
-      <el-amap ref="map" vid="amapDemo" :amap-manager="amapManager" :center="center" :zoom="zoom" :plugin="plugin" :events="events" class="amap-demo">
+    <button @click="getMap()">get map</button>
+      <el-amap vid="amapDemo" :amap-manager="amapManager" :zoom="zoom" :center="center" class="amap-demo" :plugin="plugin">
+        <el-amap-search-box class="search-box" :search-option="searchOption" :on-search-result="onSearchResult"></el-amap-search-box>
+        <el-amap-info-window  :position="mywindow.position" :content="mywindow.content" :visible="mywindow.visible" :events="mywindow.events"></el-amap-info-window>
+        <el-amap-marker :position="marker.position" :events="marker.events" :visible="marker.visible" :draggable="marker.draggable"></el-amap-marker>
+        <el-amap-circle :center="circle.center" :radius="circle.radius" :fillOpacity="circle.fillOpacity" :events="circle.events" :strokeColor="circle.strokeColor" :strokeStyle="circle.strokeStyle" :fillColor="circle.fillColor"></el-amap-circle>
       </el-amap>
-
-      <div class="toolbar">
-        <button @click="getMap()">get map</button>
-      </div>
+      <el-amap vid="amapDemo">
+      </el-amap>
     </div>
-  </template>
+  </div>
+</template>
 
-  <style>
-    .amap-demo {
-      height: 300px;
-    }
-  </style>
+<style>
+  .amap-page-container {
+    height: 500px;
+  }
+</style>
 
-  <script>
-    // NPM 方式
-    // import { AMapManager } from 'vue-amap';
-    // CDN 方式
-    let amapManager = new VueAMap.AMapManager();
-    module.exports = {
-      data: function() {
-        return {
-          amapManager,
-          zoom: 12,
-          center: [121.59996, 31.197646],
-          events: {
-            init: (o) => {
-              console.log(o.getCenter())
-              console.log(this.$refs.map.$$getInstance())
-              o.getCity(result => {
-                console.log(result)
-              })
-            },
-            'moveend': () => {
-            },
-            'zoomchange': () => {
-            },
-            'click': (e) => {
-              alert('map clicked');
+
+<script>
+export default {
+  data () {
+    return {
+
+      zoom: 15,
+      center: [121.5273285, 31.21515044],
+      circle: {
+        clickable: true,
+        center: [121.5273285, 31.21515044],
+        radius: 200,
+        fillOpacity: 0.3,
+        strokeStyle: 'dashed',
+        fillColor: '#FFFF00',
+        strokeColor: '#00BFFF'
+      },
+      marker: {
+        position: [121.5273285, 31.21515044],
+        events: {
+          click: () => {
+            if (this.mywindow.visible === true) {
+              this.mywindow.visible = false
+            } else {
+              this.mywindow.visible = true
             }
           },
-          plugin: ['ToolBar', {
-            pName: 'MapType',
-            defaultType: 0,
-            events: {
-              init(o) {
-                console.log(o);
-              }
-            }
-          }]
-        };
+          dragend: (e) => {
+            this.markers[0].position = [e.lnglat.lng, e.lnglat.lat]
+          }
+        },
+        visible: true,
+        draggable: false
       },
-
-      methods: {
-        getMap() {
-          // amap vue component
-          console.log(amapManager._componentMap);
-          // gaode map instance
-          console.log(amapManager._map);
+      mywindow: {
+        position: [121.5273285, 31.21515044],
+        content: '<h4>该点数据信息</h4><div class="text item">Information A: ...</div><div class="text item">Information B: ...</div>',
+        visible: true,
+        events: {
+          close () {
+            this.mywindow.visible = false
+          }
+        }
+      },
+      plugin: {
+        pName: 'Scale',
+        events: {
+          init (instance) {
+            console.log(instance)
+          }
         }
       }
-    };
+    }
+  }
+}
 </script>

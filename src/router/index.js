@@ -7,6 +7,7 @@ import Category from '@/views/category'
 import Content from '@/views/category/Content'
 import Me from '@/views/me'
 import TTS from '@/views/TTS'
+import report from '@/views/report'
 Vue.use(Router)
 
 export default new Router({
@@ -25,6 +26,11 @@ export default new Router({
           name: '质检',
           path: 'TTS',
           component: TTS
+        },
+        {
+          name: '报告',
+          path: 'report',
+          component: report
         },
         {
           name: 'Category',

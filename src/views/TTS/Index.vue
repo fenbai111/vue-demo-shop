@@ -36,7 +36,7 @@
   }]
 
   const navList = [{
-    url: '/report',
+    url: '../report',
     img: '../../../static/vegetables.png',
     title: '报告'
   }, {
