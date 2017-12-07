@@ -1,4 +1,3 @@
-
 <template>
   <div>
     <div class="amap-page-container">
@@ -13,11 +12,24 @@
           location: lng = {{ lng }} lat = {{ lat }}
         </span>
         <span v-else>正在定位</span>
+        <el-row>
+        <span>{{ address }}</span>
+        </el-row>
+        <el-row >
+         <el-col :span="1">
+         <el-button :span="1" type="primary" size="large" @click.native="addItem" >添加更多1</el-button>
+         </el-col>
+
+        </el-row>
+
       </div>
-      <span>{{ address }}</span>
     </div>
-    <el-button :span="24" type="primary" size="large" @click.native="addItem">添加更多</el-button>
+    <div>
+
+    </div>
+
   </div>
+
 </template>
 
 
@@ -25,11 +37,13 @@
   .amap-page-container {
     height: 500px;
   }
+  .el-button-primary .router-link{color:#fff;}
 </style>
 
 
 
 <script>
+  import AMap from 'vue-amap';
   export default {
     data() {
       let self = this;
