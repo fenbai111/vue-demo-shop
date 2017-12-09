@@ -7,27 +7,14 @@
         <el-amap-circle :center="circle.center" :radius="circle.radius" :fillOpacity="circle.fillOpacity" :events="circle.events"
           :strokeColor="circle.strokeColor" :strokeStyle="circle.strokeStyle" :fillColor="circle.fillColor"></el-amap-circle>
       </el-amap>
-      <div class="toolbar">
-        <span v-if="loaded">
-          location: lng = {{ lng }} lat = {{ lat }}
-        </span>
-        <span v-else>正在定位</span>
-        <el-row>
-        <span>{{ address }}</span>
-        </el-row>
-        <el-row >
-         <el-col :span="1">
-         <el-button :span="1" type="primary" size="large" @click.native="addItem" >添加更多1</el-button>
-         </el-col>
-
-        </el-row>
-
-      </div>
     </div>
-    <div>
-
+    <p hidden>location: lng = {{ lng }} lat = {{ lat }}</p>
+    <div class = "localtion">
+      <p >我的位置:</p>
+      <p style="color:gray;font-size:15px;">{{ address }}</p>
     </div>
-
+    <mt-field style="width:100vw;" class = "localtion" label="备注" placeholder="introduction" type="textarea" rows="2" v-model="introduction"></mt-field>
+    <el-button type="success" style="width:100vw;" @click.native="addItem">成功按钮</el-button>
   </div>
 
 </template>
@@ -38,6 +25,30 @@
     height: 500px;
   }
   .el-button-primary .router-link{color:#fff;}
+  .login-bottom a{
+  	display: block;
+  	width: 80%;
+  	height: 3.5rem;
+  	line-height: 3.5rem;
+  	text-align: center;
+  	color: #fff;
+  	background: #7B7DE4;
+  	box-shadow: 0 2px 13px 0 rgba(123,125,229,0.69);
+  	border-radius: 0.4rem;
+  	margin: 2rem auto;
+  	font-size:1.2rem;
+  }
+  .login-bottom a:hover{
+  	background: #5657a0;
+  }
+  .localtion {
+    margin:0px;
+    padding:0px;
+    background-color:#E7EAEB;
+    font-family:"微软雅黑","黑体","宋体";
+    font-size:18px;
+    height:45px;
+  }
 </style>
 
 
