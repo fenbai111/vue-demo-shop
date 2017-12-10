@@ -3,7 +3,6 @@ import App from './App'
 import router from './router'
 import AMap from 'vue-amap';
 import ElementUI from 'element-ui'
-import Mint from 'mint-ui';
 import '../node_modules/element-ui/lib/theme-chalk/index.css';
 
 Vue.config.productionTip = false
@@ -21,4 +20,3 @@ AMap.initAMapApiLoader({
   plugin: ['AMap.Autocomplete', 'AMap.PlaceSearch', 'AMap.Scale', 'AMap.OverView', 'AMap.ToolBar', 'AMap.MapType', 'AMap.PolyEditor', 'AMap.CircleEditor','AMap.Geolocation','AMap.Geocoder']
 });
 Vue.use(ElementUI);
-Vue.use(Mint);

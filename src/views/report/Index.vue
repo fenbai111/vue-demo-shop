@@ -12,9 +12,42 @@
     <div class = "localtion">
       <p >我的位置:</p>
       <p style="color:gray;font-size:15px;">{{ address }}</p>
+      <el-form ref="form" :model="form" class="fromFront"  label-width="50px">
+        <hr />
+        <el-row :gutter="20">
+          <el-col  :span="18"  >
+          <el-button type="text" @click="dialogFormVisible = true" style="text-align:left; width:80vw;">
+            <font class = "localtion" > 备注：  </font> <font class = "localtion" color="gray">选填</font>
+          </el-button>
+          <el-dialog  :visible.sync="dialogFormVisible"  width = 	"80%">
+            <el-input type="textarea" :rows="4" placeholder="添加备注(选填)" v-model="textarea">
+            </el-input>
+            <div slot="footer" class="dialog-footer">
+              <el-button @click="dialogFormVisible = false">取 消</el-button>
+              <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+            </div>
+          </el-dialog>
+          </el-col>
+          <el-col :span="18" style="text-align:right; width:20vw;" >
+          <el-upload
+            class="upload-demo"
+            action="https://jsonplaceholder.typicode.com/posts/"
+            :on-preview="handlePreview"
+            :on-remove="handleRemove"
+            :limit="1"
+            :on-exceed="handleExceed"
+            :file-list="fileList">
+            <el-button size="large" class="icon-xiangji"></el-button>
+          </el-upload>
+          </el-col>
+        </el-row>
+      </el-form>
     </div>
-    <mt-field style="width:100vw;" class = "localtion" label="备注" placeholder="introduction" type="textarea" rows="2" v-model="introduction"></mt-field>
-    <el-button type="success" style="width:100vw;" @click.native="addItem">成功按钮</el-button>
+    <hr />
+    <p />
+    <div class="but-group">
+      <el-button type="primary" style="width:100vw;" >成功按钮</el-button>
+    </div>
   </div>
 
 </template>
@@ -24,31 +57,24 @@
   .amap-page-container {
     height: 500px;
   }
-  .el-button-primary .router-link{color:#fff;}
-  .login-bottom a{
-  	display: block;
-  	width: 80%;
-  	height: 3.5rem;
-  	line-height: 3.5rem;
-  	text-align: center;
-  	color: #fff;
-  	background: #7B7DE4;
-  	box-shadow: 0 2px 13px 0 rgba(123,125,229,0.69);
-  	border-radius: 0.4rem;
-  	margin: 2rem auto;
-  	font-size:1.2rem;
-  }
-  .login-bottom a:hover{
-  	background: #5657a0;
-  }
+  .el-button-primary .router-link{
+    color:#fff;
+    margin-right: 20px;}
   .localtion {
     margin:0px;
     padding:0px;
     background-color:#E7EAEB;
-    font-family:"微软雅黑","黑体","宋体";
+    font-family: Consolas;
     font-size:18px;
-    height:45px;
   }
+  .fromFront .el-form-item{
+    margin:0px;
+    padding:0px;
+    background-color:#E7EAEB;
+    font-family:"微软雅黑","黑体","宋体";
+    font-size:50px;
+  }
+
 </style>
 
 
@@ -59,6 +85,8 @@
     data() {
       let self = this;
       return {
+        textarea: '',
+        dialogFormVisible: false,
         events: {
           click(e) {
             let {lng, lat} = e.lnglat;
@@ -77,6 +105,9 @@
               }
             });
           }
+        },
+        form: {
+          remark: ''
         },
         searchOption: {
           city: '上海',
@@ -152,6 +183,17 @@
 
 
       };
+    },
+    methods: {
+      handleRemove(file, fileList) {
+        console.log(file, fileList);
+      },
+      handlePreview(file) {
+        console.log(file);
+      },
+      handleExceed(files, fileList) {
+        this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+      }
     }
   }
 
