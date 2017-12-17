@@ -28,32 +28,20 @@
             </div>
           </el-dialog>
           </el-col>
+
+
           <el-col :span="18" style="text-align:right; width:20vw;" >
-          <el-upload
-            class="upload-demo"
-            :show-file-list="showFileList"
-            action="https://jsonplaceholder.typicode.com/posts/"
-            :on-preview="handlePreview"
-            :on-remove="handleRemove"
-            :limit="1"
-            :on-exceed="handleExceed"
-            :file-list="fileList">
-            <el-button size="large" class="iconfont icon-xiangji"></el-button>
-          </el-upload>
-
-
-          <el-upload
-            class="upload-demo"
-            action="https://jsonplaceholder.typicode.com/posts/"
-            :on-preview="handlePreview"
-            :on-remove="handleRemove"
-            :file-list="fileList2"
-            list-type="picture">
-            <el-button size="large" class="iconfont icon-xiangji"></el-button>
-            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-          </el-upload>
-
+              <p v-if="images.length < 1">
+                <img src="../../assets/img/xiangji.png" @click="addImange()">
+              </p>
+              <p v-for="(item, index) in images" :key="index">
+                <img :src="imgCropFilter(item)">
+              </p>
+            <input type="file" id="fileElem" accept="image/*" @change="choosePhoto($event)" hidden/>
           </el-col>
+
+
+
         </el-row>
       </el-form>
     </div>
@@ -99,6 +87,7 @@
     data() {
       let self = this;
       return {
+        images: [],
         dialogClose:false,
         showFileList:false,
         textarea: '',
@@ -201,15 +190,76 @@
       };
     },
     methods: {
-      handleRemove(file, fileList) {
-        console.log(file, fileList);
+      addImange: function() {
+        let fileElem = document.getElementById("fileElem");
+        if(fileElem) {
+          fileElem.click();
+        }
       },
-      handlePreview(file) {
-        console.log(file);
+      removeImage: function(index) {
+        let _this = this
+        let images = _this.images
+        images.splice(index, 1)
+        _this.images = images
       },
-      handleExceed(files, fileList) {
-        this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
-      }
+      imgCropFilter: function(imageCode){
+        let result = 'Fo9D7-leb-x3A3rS6GsiEBQZ2On4';
+        if (imageCode) {
+          let array = imageCode.split(',');
+          if(array.length > 0){
+            result = array[0];
+          }
+        }
+        return 'https://cdns.mtscrm.com/' + result + '?imageView2/1/w/150/h/150'
+      },
+      viewImage:function(index){
+        let _this = this
+        let imgList =  []
+        let current = ''
+        _this.$lodash.forEach(_this.images,function(imageCode){
+          imgList.push(_this.imgFilter(imageCode))
+        })
+        if(_this.CLIENT_TYPE == 'wechart') {
+          _this.$wx.previewImage({
+            current:imgList[index],
+            urls: imgList
+          })
+        } else if(_this.CLIENT_TYPE == 'mtscrmApp'){
+          _this.$jsBridge.showImages(JSON.stringify(imgList), index)
+        }
+      },
+      choosePhoto: function(e){
+        let _this = this;
+        let files;
+        if (e.dataTransfer) {
+          files = e.dataTransfer.files;
+        } else if (e.target) {
+          files = e.target.files;
+        }
+        if(files.length > 0) {
+//          _this.PUSH_LOADING()
+          _this.$axios.get('v1/common/uptokens').then((res) => {
+            let data = res.data
+            let formData = new FormData()
+            formData.append('token', data.upToken)
+            formData.append('file', files[0])
+            //提交给七牛处理
+//            _this.PUSH_LOADING()
+            _this.$axios.post('https://up.qbox.me/', formData).then((res) => {
+              let images = _this.images;
+              images.push(res.data.key);
+              _this.images = images;
+//              _this.SHIFT_LOADING()
+            }).catch((err) => {
+//              _this.SHIFT_LOADING()
+            })
+//            _this.SHIFT_LOADING()
+          }).catch((err) => {
+//            _this.SHIFT_LOADING()
+          })
+        }
+      },
+
     }
   }
 
