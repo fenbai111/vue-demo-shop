@@ -19,7 +19,7 @@
           <el-button type="text" @click="dialogFormVisible = true" style="text-align:left; width:80vw;">
             <font class = "localtion" > 备注：  </font> <font class = "localtion" color="gray">选填</font>
           </el-button>
-          <el-dialog  :visible.sync="dialogFormVisible"  width = 	"80%">
+          <el-dialog  :visible.sync="dialogFormVisible"  width = "80%" :show-close="dialogClose" >
             <el-input type="textarea" :rows="4" placeholder="添加备注(选填)" v-model="textarea">
             </el-input>
             <div slot="footer" class="dialog-footer">
@@ -31,14 +31,28 @@
           <el-col :span="18" style="text-align:right; width:20vw;" >
           <el-upload
             class="upload-demo"
+            :show-file-list="showFileList"
             action="https://jsonplaceholder.typicode.com/posts/"
             :on-preview="handlePreview"
             :on-remove="handleRemove"
             :limit="1"
             :on-exceed="handleExceed"
             :file-list="fileList">
-            <el-button size="large" class="icon-xiangji"></el-button>
+            <el-button size="large" class="iconfont icon-xiangji"></el-button>
           </el-upload>
+
+
+          <el-upload
+            class="upload-demo"
+            action="https://jsonplaceholder.typicode.com/posts/"
+            :on-preview="handlePreview"
+            :on-remove="handleRemove"
+            :file-list="fileList2"
+            list-type="picture">
+            <el-button size="large" class="iconfont icon-xiangji"></el-button>
+            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+          </el-upload>
+
           </el-col>
         </el-row>
       </el-form>
@@ -85,6 +99,8 @@
     data() {
       let self = this;
       return {
+        dialogClose:false,
+        showFileList:false,
         textarea: '',
         dialogFormVisible: false,
         events: {

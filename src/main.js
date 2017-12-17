@@ -4,7 +4,7 @@ import router from './router'
 import AMap from 'vue-amap';
 import ElementUI from 'element-ui'
 import '../node_modules/element-ui/lib/theme-chalk/index.css';
-
+import '../src/assets/icon/iconfont.css';
 Vue.config.productionTip = false
 
 new Vue({
