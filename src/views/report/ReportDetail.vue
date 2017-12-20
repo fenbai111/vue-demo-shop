@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div >
-      <mt-tab-container  v-model="active">
-        <mt-tab-container-item id="report1">
+    <div class="page-tab-container">
+      <mt-tab-container class="page-tabbar-tab-container" v-model="active" swipeable>
+        <mt-tab-container-item id="tab-container1">
           <mt-cell
-            title="报告11"
-            to="/report/reportDetail"
+            title="报告"
+            to="/report"
             is-link
             value="">
           </mt-cell>
@@ -16,13 +16,14 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      active: 'report1'
-    };
-  }
-};
+  export default {
+    name: 'page-tab-container',
+    data() {
+      return {
+        active: 'tab-container1'
+      };
+    }
+  };
 </script>
 
 <style lang="css" scoped>

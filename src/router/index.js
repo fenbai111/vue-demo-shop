@@ -9,6 +9,7 @@ import Me from '@/views/me'
 import TTS from '@/views/TTS'
 import check from '@/views/check'
 import report from '@/views/report'
+import ReportDetail from '@/views/report/ReportDetail'
 Vue.use(Router)
 
 export default new Router({
@@ -36,7 +37,14 @@ export default new Router({
         {
           name: '报告',
           path: 'report',
-          component: report
+          component: report,
+          children: [
+            {
+              name: 'ReportDetail',
+              path: 'reportDetail',
+              component: ReportDetail
+            }
+          ]
         },
         {
           name: 'Category',
