@@ -7,6 +7,7 @@ import Category from '@/views/category'
 import Content from '@/views/category/Content'
 import Me from '@/views/me'
 import TTS from '@/views/TTS'
+import check from '@/views/check'
 import report from '@/views/report'
 Vue.use(Router)
 
@@ -26,6 +27,11 @@ export default new Router({
           name: '质检',
           path: 'TTS',
           component: TTS
+        },
+        {
+          name: '打卡',
+          path: 'check',
+          component: check
         },
         {
           name: '报告',

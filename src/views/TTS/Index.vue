@@ -36,17 +36,17 @@
   }]
 
   const navList = [{
-    url: '../report',
+    url: '../check',
     img: '../../../static/vegetables.png',
-    title: '报告'
+    title: '打卡'
   }, {
     url: '/aql',
     img: '../../../static/fruit.png',
     title: 'AQL计算'
   }, {
-    url: '/check',
+    url: '../report',
     img: '../../../static/vegetables.png',
-    title: '地图定位',
+    title: '报告',
   }]
 
   export default {
