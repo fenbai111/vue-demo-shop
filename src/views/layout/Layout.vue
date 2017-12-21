@@ -3,9 +3,7 @@
     <div class="main-container">
       <router-view></router-view>
     </div>
-    <footer-nav>
-      <footer-nav-item v-for="(item, index) in navs" :key="index" :title="item.title" :img="item.img" :url="item.url"></footer-nav-item>
-    </footer-nav>
+
   </div>
 
 </template>
@@ -41,7 +39,7 @@
   export default {
     data () {
       return {
-        navs: navList
+
       }
     },
     components: {
