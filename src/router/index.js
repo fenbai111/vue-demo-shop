@@ -10,6 +10,9 @@ import TTS from '@/views/TTS'
 import check from '@/views/check'
 import report from '@/views/report'
 import ReportDetail from '@/views/report/ReportDetail'
+import ReportTask from '@/views/report/ReportTask'
+import ReportUpload from '@/views/report/ReportUpload'
+
 Vue.use(Router)
 
 export default new Router({
@@ -38,13 +41,21 @@ export default new Router({
           name: '报告',
           path: 'report',
           component: report,
-          children: [
-            {
-              name: 'ReportDetail',
-              path: 'reportDetail',
-              component: ReportDetail
-            }
-          ]
+        },
+        {
+          name: 'ReportDetail',
+          path: 'reportDetail',
+          component: ReportDetail
+        },
+        {
+          name: 'ReportTask',
+          path: 'reportTask',
+          component: ReportTask
+        },
+        {
+          name: 'ReportUpload',
+          path: 'reportUpload',
+          component: ReportUpload
         },
         {
           name: 'Category',

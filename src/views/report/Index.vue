@@ -5,7 +5,7 @@
         <mt-tab-container-item id="report1">
           <mt-cell
             title="报告11"
-            to="/report/reportDetail"
+            to="/ReportDetail"
             is-link
             value="">
           </mt-cell>
@@ -21,7 +21,7 @@ export default {
     return {
       active: 'report1'
     };
-  }
+  },
 };
 </script>
 
